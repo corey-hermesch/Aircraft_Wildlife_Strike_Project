@@ -141,3 +141,18 @@ def split_function(df, target_var):
     print(f'Test: {test.shape}')
     
     return train, validate, test
+
+#defining a function to get dummy columns for cleaned up wildlife_strike dataframe
+def prep_w_strike_df_for_modeling(df, target='damage_level'):
+    """
+    This function will drop columns I'm not using for modeling, and it 
+    will make dummy columns for the categorical columns I'm moving forward to modeling with.
+    It will return a df ready for modeling with the target as the first column
+    """
+    # define columns to make into dummy columns
+    keep_cols = ['size_of_species', 'ac_mass', 'ac_class', 'type_eng', 'num_engs', 'phase_of_flight', 'precipitation']
+
+    dummy_df = pd.get_dummies(df[keep_cols], drop_first=True)
+    
+    modeling_df = pd.concat([df[[target]], dummy_df], axis=1)
+    return modeling_df
