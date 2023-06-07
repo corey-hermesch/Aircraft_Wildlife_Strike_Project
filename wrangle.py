@@ -6,6 +6,8 @@ import os
 
 from sklearn.model_selection import train_test_split
 
+from sklearn.preprocessing import MinMaxScaler
+
 np.random.seed(42)
 
 import warnings
@@ -156,3 +158,112 @@ def prep_w_strike_df_for_modeling(df, target='damage_level'):
     
     modeling_df = pd.concat([df[[target]], dummy_df], axis=1)
     return modeling_df
+
+
+# defining function to wrangle wildlife_strike data
+def wrangle_wildlife_strike_df_take_two(filename = 'strike_reports.csv'):
+    """
+    This function will
+    - take about 12-15 seconds to run
+    - accept a .csv filename for wildlife strikes; default is 'strike_reports.csv'
+    - read the filename into a dataframe
+    - make column names lowercase and change 'size' to 'size_of_species'
+    - change the date column to datetime and set as index
+    - discard unused columns (drop from 100 columns down to 20)
+    - Handle nulls - mostly fill nulls with 'Unknown'/'U'/'UNK'/'Z''ZZ'/-1/'99'
+    - for nr_injuries and nr_fatalities fill nulls with 0
+    - change floats to ints
+    """
+    # check for cached csv (file_prepared.csv) which is smaller and quicker to read
+    cache_file_name = filename.split('.')[0] + '_prepared_take_two.csv'
+    if os.path.isfile(cache_file_name):
+        df = pd.read_csv(cache_file_name)
+        df.date = df.date.astype('datetime64')
+        df = df.set_index('date')
+        df = df.sort_index()
+        print ("cached csv file found and read")
+    
+    else:
+    
+        # read in dataframe; errors out without the encoding variable set to latin1
+        df = pd.read_csv(filename, encoding='latin1')
+
+        # make column names lowercase
+        df.columns = df.columns.str.lower()
+
+        # make the date column a datetime and set it as index (Takes about 7 seconds)
+        df = df.rename(columns={'incident_date' : 'date'})
+        df.date = df.date.astype('datetime64')
+        df = df.set_index('date')
+        df = df.sort_index()
+
+        # only keep these 20 columns
+        keep_cols = ['time_of_day', 'airport_id', 'airport', 'runway', 'state', 'opid', 'operator'
+                 , 'aircraft', 'ac_class', 'ac_mass', 'type_eng', 'num_engs', 'phase_of_flight'
+                 , 'speed', 'precipitation', 'damage_level', 'species_id', 'species', 'size'
+                 , 'num_struck']
+        df = df[keep_cols]
+
+        # Drop nulls for this version
+        df = df.dropna()
+        df = df[df.damage_level != 'M?']
+        
+        # change 'size' column name to a non-reserved word
+        df = df.rename (columns = {'size': 'size_of_species'})
+        
+        # adjust precipitation column and break it into several columns
+        df['precip_none'] = np.where(df.precipitation == 'None', 1, 0)
+        df['precip_rain'] = np.where(df.precipitation.str.contains('Rain'), 1, 0)
+        df['precip_fog'] = np.where(df.precipitation.str.contains('Fog'), 1, 0)
+        df['precip_snow'] = np.where(df.precipitation.str.contains('Snow'), 1, 0)
+        df = df.drop(columns=['precipitation'])
+        
+        # change floats to ints
+        df.ac_mass = df.ac_mass.astype(int)
+        df.num_engs = df.num_engs.astype(int)
+        
+        # write cached file
+        df.to_csv(cache_file_name, index='date')
+        print(f'{filename} found, read, and prepared')
+    
+    return (df)
+
+# defining a function for the second iteration to prep for modeling
+def prep_w_strike_df_for_modeling_take_two(df, target='damage_level'):
+    """
+    This function will drop columns I'm not using for modeling, and it 
+    will make dummy columns for the categorical columns I'm moving forward to modeling with.
+    It will return a df ready for modeling (except for scaling) with the target as the first column
+    """
+    # define columns to make into dummy columns
+    keep_cols = ['size_of_species', 'ac_mass', 'ac_class', 'type_eng', 'num_engs', 'phase_of_flight'
+                 , 'precip_none', 'precip_rain', 'precip_fog', 'precip_snow', 'speed']
+
+    dummy_df = pd.get_dummies(df[keep_cols], drop_first=True)
+    
+    modeling_df = pd.concat([df[[target]], dummy_df], axis=1)
+    return modeling_df
+
+# defining a function to get scaled data using MinMaxScaler
+def get_minmax_scaled (train, validate, test, columns_to_scale):
+    """ 
+    This function will
+    - accept train, validate, test, and which columns are to be scaled
+    - makes minmax scaler, fits scaler on train columns
+    - returns 3 scaled dataframes; one for train/validate/test
+    """
+    # make copies for scaling
+    train_scaled = train.copy()
+    validate_scaled = validate.copy()
+    test_scaled = test.copy()
+    
+    # make and fit minmax scaler
+    scaler = MinMaxScaler()
+    scaler.fit(train[columns_to_scale])
+
+    # use the thing
+    train_scaled[columns_to_scale] = scaler.transform(train[columns_to_scale])
+    validate_scaled[columns_to_scale] = scaler.transform(validate[columns_to_scale])
+    test_scaled[columns_to_scale] = scaler.transform(test[columns_to_scale])
+    
+    return train_scaled, validate_scaled, test_scaled

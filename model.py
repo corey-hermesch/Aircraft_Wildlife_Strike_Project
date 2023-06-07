@@ -138,7 +138,7 @@ def get_knn_metrics(X_train, X_validate, y_train, y_validate, weights_='uniform'
     return results_df
 
 # defining a function to get accuracy scores of multiple RandomForest models
-def get_rf_scores(X_train, X_validate, y_train, y_validate):
+def get_rf_scores(X_train, X_validate, y_train, y_validate, crit='gini', m_depth_range=10, m_s_leaf_range=10):
     """
     This function will
     - take a while to run if you have a large dataset!
@@ -150,14 +150,14 @@ def get_rf_scores(X_train, X_validate, y_train, y_validate):
     """
 
     # initialize random forest accuracy dataframe
-    rf_acc_init = pd.Series(range(1,11))
+    rf_acc_init = pd.Series(range(1,m_s_leaf_range+1))
     rf_acc_df = pd.DataFrame(rf_acc_init, columns=['min_samples_leaf'])
 
-    for y in range(1, 11): # max_depth = 1-10
+    for y in range(1, m_depth_range+1): # max_depth = 1-10
         train_acc_list = []
         val_acc_list = []
-        for x in range(1, 11):  # min_samples_leaf = 1-10
-            rf = RandomForestClassifier(min_samples_leaf=x, random_state=42, max_depth = y, criterion='entropy')
+        for x in range(1, m_s_leaf_range+1):  # min_samples_leaf = 1-10
+            rf = RandomForestClassifier(min_samples_leaf=x, random_state=42, max_depth = y, criterion=crit)
             rf.fit(X_train, y_train)
             train_acc = rf.score(X_train, y_train)
             val_acc = rf.score(X_validate, y_validate)
