@@ -2,12 +2,19 @@
 import numpy as np
 import pandas as pd
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 from sklearn.metrics import confusion_matrix, classification_report
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier 
 from sklearn.tree import DecisionTreeClassifier
+
+import math
+
+np.random.seed(42)
 
 # FUNCTIONS
 
@@ -114,7 +121,28 @@ def get_multi_logit_scores(X_train, X_validate, y_train, y_validate):
         new_df = pd.DataFrame(combo_array)
         results_df = pd.concat((results_df, new_df.T), axis=0)
 
+    results_df.columns = list(results_df.iloc[0])
+    results_df = results_df.iloc[1:]
+    
     return results_df  
+
+#defining a function to plot the results from get_multi_logit_scores
+def plot_logit_results(results_df):
+    """
+    This function will
+    - accept the results dataframe from get_multi_logit_scores
+    - Plot the results
+    """
+    powers = [math.log10(x) for x in results_df.C]
+    plt.plot(powers, results_df.train_acc, label='train_acc')
+    plt.plot(powers, results_df.val_acc, label='val_acc')
+    plt.legend()
+    plt.title('Logistic Regression Results for varying values of C')
+    plt.xlabel('10 to the x power (10^-2 = .01, 10^-1 = .1, etc.)')
+    plt.show()
+    
+    return
+
 
 # defining a function to get accuracy scores of multiple knn models
 def get_knn_metrics(X_train, X_validate, y_train, y_validate, weights_='uniform', max_n=20):
@@ -138,7 +166,7 @@ def get_knn_metrics(X_train, X_validate, y_train, y_validate, weights_='uniform'
     return results_df
 
 # defining a function to get accuracy scores of multiple RandomForest models
-def get_rf_scores(X_train, X_validate, y_train, y_validate, crit='gini', m_depth_range=10, m_s_leaf_range=10):
+def get_rf_scores(X_train, X_validate, y_train, y_validate, random_state=42, crit='gini', m_depth_range=10, m_s_leaf_range=10):
     """
     This function will
     - take a while to run if you have a large dataset!
@@ -218,4 +246,21 @@ def print_model_metrics(y_split, y_pred, which):
     print(f'Accuracy on {which} is {accuracy}')
     print(f'Recall on {which} is {recall}')
 
+    return
+
+# get test results for final model
+def get_best_rf(X_train, X_validate, X_test, y_train, y_validate, y_test, random_state=42, max_depth=9, min_samples_leaf=1, crit='gini'):
+    """
+    This function will
+    - accept X-y splits on train/validate/test (dummy_cols and scaled data for X's)
+    - make a single Random Forest model with hyperparamaters 
+    """
+    rf = RandomForestClassifier(min_samples_leaf=min_samples_leaf, max_depth = max_depth, criterion=crit)
+    rf.fit(X_train, y_train)
+    train_acc = rf.score(X_train, y_train)
+    val_acc = rf.score(X_validate, y_validate)
+    test_acc = rf.score(X_test, y_test)
+    
+    print(f'Accuracy on test = {test_acc}')
+    
     return

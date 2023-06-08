@@ -9,10 +9,12 @@ Wildlife strikes with aircraft are a safety hazard. Damage to aircraft is not on
 * Discover drivers of damaging wildlife (bird) strikes
 * Use drivers to develop a machine learning model to classify damage level as None/Minor/Substantial/Destroyed (N/M/S/D), as captured in the Federal Aviation Administration (FAA) Wildlife Strike Database
 * Damage Level Definition
-    * N (None): No damage was reported
+    * N (None): No damage was reported. 
     * M (Minor): Aircraft can be rendered airworthy by simple repairs or replacements and an extensive inspection is not necessary
+    * M? (Undetermined): Aircraft was damaged but details were lacking
     * S (Substantial): Aircraft incurs damage or structural failure which adversely affects the structure strength, performance, or flight characteristics of the aircraft and which normally would require major repair or replacement of the affected component. Bent fairings or cowlings; small dents or puncture holes in the skin;  damage to wing tips, antennae, tires or brakes; and engine blade damage not requiring blade replacement are specifically excluded.
     * D (Destroyed): Damage sustained makes it inadvisable to restore the aircraft to an airworthy condition
+
 * This information could be used to assist aircrew, airport managers, and the FAA in mitigating damaging wildlife strikes
  
 # Initial Thoughts
@@ -33,11 +35,10 @@ My initial hypothesis is that wildlife strikes are more likely to cause damage w
        * What is the distribution of damage levels (N/M/S/D)?
        * Does size of species affect damage level?
        * Does aircraft speed affect damage level?
-       * Does the size and mass of the aircraft affect damage level?
+       * Does the type or mass of the aircraft affect damage level?
        * Does the engine type and/or number of engines affect damage level?
        * Does time of day affect damage level?
        * Does phase of flight affect damage level? 
-       * What is the rate of bird strikes over time?
       
 * Develop a Model to predict what damage level will result from a bird strike
    * Use drivers identified in explore to build predictive models of different types

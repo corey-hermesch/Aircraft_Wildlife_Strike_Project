@@ -236,12 +236,13 @@ def prep_w_strike_df_for_modeling_mvp(df, target='damage_level'):
     It will return a df ready for modeling (except for scaling) with the target as the first column
     """
     # define columns to make into dummy columns
-    keep_cols = ['size_of_species', 'ac_mass', 'ac_class', 'type_eng', 'num_engs', 'phase_of_flight'
-                 , 'precip_none', 'precip_rain', 'precip_fog', 'precip_snow', 'speed']
+    dummy_cols = ['size_of_species', 'ac_mass', 'ac_class', 'type_eng', 'num_engs', 'time_of_day' 
+                 , 'phase_of_flight', 'num_struck']
 
-    dummy_df = pd.get_dummies(df[keep_cols], drop_first=True)
+    dummy_df = pd.get_dummies(df[dummy_cols], drop_first=True)
     
-    modeling_df = pd.concat([df[[target]], dummy_df], axis=1)
+    modeling_df = pd.concat([df[[target, 'speed', 'precip_none', 'precip_rain'
+                                 , 'precip_snow', 'precip_fog']], dummy_df], axis=1)
     return modeling_df
 
 # defining a function to get scaled data using MinMaxScaler
