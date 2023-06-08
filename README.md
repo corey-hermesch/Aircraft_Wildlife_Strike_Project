@@ -95,5 +95,5 @@ My initial hypothesis is that wildlife strikes are more likely to cause damage w
 * Helicopters are more likely to incur damage than airplanes
  
 # Recommendations
-* For pilots, smaller aircraft are more at risk for bird strike hazards, and private pilots should pay greater attention to bird watch conditions. When checking the weather and the NOTAMS, check the bird condition as well.
+* For pilots, smaller aircraft are more at risk for bird strike hazards. Most private pilots are flying small aircraft, and they should pay greater attention to bird watch conditions. When checking the weather and the NOTAMS, check the bird condition as well. If your local airpor doesn't broadcast this, check www.usahas.com
 * For airport managers, pair data from this database with bird mitigation efforts to analyze effectiveness. The FAA in combination with the USDA have excellent recommendations for hazard mitigation, but each airport has specific hazards which can change over time. Vigilance is required.
