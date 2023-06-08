@@ -51,26 +51,26 @@ My initial hypothesis is that wildlife strikes are more likely to cause damage w
 
 | Feature | Definition |
 |:--------|:-----------|
-|damage_level| N/M/S/D for None / Minor / Substantial / Destroyed|
+|damage_level| Level of damage resulting from strike; None / Minor / Substantial / Destroyed|
 |time_of_day| Day/Night/Dusk/Dawn|
-|airport_id| e.g. KSAT, 4-letter International Civil Aviation Organization (ICAO) identifier for airport|
-|airport| e.g. SAN ANTONIO INTL, Name of airport|
-|runway| e.g. 12R, Runway in use at airport|
-|state| e.g. TX, state|
-|opid| e.g. SWA, operator code (PVT - Private, BUS - Business, etc.)|
-|operator| e.g. SOUTHWEST AIRLINES, operator name corresponding to opid|
-|aircraft| e.g. B-737-800, type of aircraft|
-|ac_class| A/B/C/J/Y/Z for class of aicraft: A-Airplane/B-Helicopter/C-Glider/J-Ultralight/Y-Other/Z-Unknown|
-|ac_mass| 1/2/3/4/5 for mass class of aircraft: 1- 0-2250 kg; 2- 2251-5700 kg; 3- 5701-27000 kg; 4- 27001-272000 kg; 5- >272000 kg|
-|type_eng| A/B/C/D/E/F/Y for type of engine: A-piston, B-turbojet, C-turboprop, D-turbofan, E-none (glider), F-turboshaft (helicopter), Y-other|
-|num_engs| 0/1/2/3/4 for number of engines|
-|phase_of_flight| e.g. Takeoff, phase of flight in which the strike occurred|
+|airport_id| 4-letter International Civil Aviation Organization (ICAO) identifier for airport, e.g. KSAT|
+|airport| Name of airport, e.g. SAN ANTONIO INTL|
+|runway| Runway in use at airport, e.g. 12R|
+|state| state, e.g. TX|
+|opid| operator code (PVT - Private, BUS - Business, SWA - Southwest, etc.)|
+|operator| operator name corresponding to opid, e.g. SOUTHWEST AIRLINES|
+|aircraft| type of aircraft, e.g. B-737-800|
+|ac_class| class of aicraft: A- Airplane / B- Helicopter / C- Glider / J- Ultralight / Y- Other / Z- Unknown|
+|ac_mass| mass category of aircraft: 1- 0-2250 kg / 2- 2251-5700 kg / 3- 5701-27000 kg / 4- 27001-272000 kg / 5- >272000 kg|
+|type_eng| type of engine: A- piston / B- turbojet / C- turboprop / D- turbofan / E- none (glider) / F- turboshaft (helicopter) / Y- other|
+|num_engs| number of engines|
+|phase_of_flight| phase of flight in which the strike occurred, e.g. Takeoff|
 |speed| speed in nautical miles per hour (knots)|
 |species_id| short form representing species of wildlife|
 |species| long form for species of wildlife|
-|size_of_species| Small/Medium/Large, size of species struck|
+|size_of_species| size of species struck, Small / Medium / Large / Unknown|
 |num_struck| number of wildlife struck|
-|precipitation| e.g. None/Rain/Snow, type of precipitation if any present at time of strike|
+|precipitation| type of precipitation present at time of strike, e.g. None / Rain / Snow|
 
 ## Data Dictionary Notes
 * FAA Wildlife Strike Database contains records of reported wildlife strikes since 1990. Wildlife strike reporting is often voluntary. The database represents only the information received from airlines, airports, pilots, Mandatory Occurrence Reports (MOR), incident/accident information, and other sources.
@@ -81,8 +81,8 @@ My initial hypothesis is that wildlife strikes are more likely to cause damage w
 # Steps to Reproduce
 1) Clone this repo.
 2) Acquire the data
-    2a) Download May 2023 csv from [here](https://drive.google.com/file/d/13Lee9Ux_FXOhzhHB2WfhPHQRYXUXOyYF/view?usp=sharing)
-    2b) Download Access Database from [FAA](https://wildlife.faa.gov/search). Open in Access and save as .csv file
+    - 2a) Download May 2023 csv from [here](https://drive.google.com/file/d/13Lee9Ux_FXOhzhHB2WfhPHQRYXUXOyYF/view?usp=sharing)
+    - 2b) Download Access Database from [FAA](https://wildlife.faa.gov/search). Open in Access and save as .csv file
 3) Save 'strike_reports.csv' in folder with notebook
 4) Run notebook.
  
