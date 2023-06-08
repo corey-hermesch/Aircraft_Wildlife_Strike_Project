@@ -161,7 +161,7 @@ def prep_w_strike_df_for_modeling(df, target='damage_level'):
 
 
 # defining function to wrangle wildlife_strike data
-def wrangle_wildlife_strike_df_take_two(filename = 'strike_reports.csv'):
+def wrangle_wildlife_strike_df_mvp(filename = 'strike_reports.csv'):
     """
     This function will
     - take about 12-15 seconds to run
@@ -175,7 +175,7 @@ def wrangle_wildlife_strike_df_take_two(filename = 'strike_reports.csv'):
     - change floats to ints
     """
     # check for cached csv (file_prepared.csv) which is smaller and quicker to read
-    cache_file_name = filename.split('.')[0] + '_prepared_take_two.csv'
+    cache_file_name = filename.split('.')[0] + '_prepared_mvp.csv'
     if os.path.isfile(cache_file_name):
         df = pd.read_csv(cache_file_name)
         df.date = df.date.astype('datetime64')
@@ -229,7 +229,7 @@ def wrangle_wildlife_strike_df_take_two(filename = 'strike_reports.csv'):
     return (df)
 
 # defining a function for the second iteration to prep for modeling
-def prep_w_strike_df_for_modeling_take_two(df, target='damage_level'):
+def prep_w_strike_df_for_modeling_mvp(df, target='damage_level'):
     """
     This function will drop columns I'm not using for modeling, and it 
     will make dummy columns for the categorical columns I'm moving forward to modeling with.
