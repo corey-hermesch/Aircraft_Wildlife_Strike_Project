@@ -82,8 +82,8 @@ My initial hypothesis is that wildlife strikes are more likely to cause damage w
 # Steps to Reproduce
 1) Clone this repo.
 2) Acquire the data
-    - 2a) Download May 2023 csv from [here](https://drive.google.com/file/d/13Lee9Ux_FXOhzhHB2WfhPHQRYXUXOyYF/view?usp=sharing)
-    - 2b) Download Access Database from [FAA](https://wildlife.faa.gov/search). Open in Access and save as .csv file
+    - EITHER Download May 2023 csv from [here](https://drive.google.com/file/d/13Lee9Ux_FXOhzhHB2WfhPHQRYXUXOyYF/view?usp=sharing)
+    - OR Download Access Database from [FAA](https://wildlife.faa.gov/search). Open in Access and save as .csv file
 3) Save 'strike_reports.csv' in folder with notebook
 4) Run notebook.
  
