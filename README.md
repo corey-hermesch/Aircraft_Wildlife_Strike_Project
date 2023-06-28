@@ -75,7 +75,7 @@ My initial hypothesis is that wildlife strikes are more likely to cause damage w
 
 ## Data Dictionary Notes
 * FAA Wildlife Strike Database contains records of reported wildlife strikes since 1990. Wildlife strike reporting is often voluntary. The database represents only the information received from airlines, airports, pilots, Mandatory Occurrence Reports (MOR), incident/accident information, and other sources.
-* About 272,000 wildlife strikes were reported in the USA between 1990 and 2022 (about 17,000 strikes at 693 U.S. airports in 2022). An additional 4,800 strikes were reportetd by U.S. Air Carriers at foreign airports, 1990-2022 (about 230 stikes at 91 airports in 53 countries in 2022).
+* About 272,000 wildlife strikes were reported in the USA between 1990 and 2022 (about 17,000 strikes at 693 U.S. airports in 2022). An additional 4,800 strikes were reported by U.S. Air Carriers at foreign airports, 1990-2022 (about 230 strikes at 91 airports in 53 countries in 2022).
 * Raw database downloaded 1 Jun 2023 contained data current up to 20 May 2023
 * Raw database contained 297,947 rows and 100 columns
 
@@ -95,5 +95,5 @@ My initial hypothesis is that wildlife strikes are more likely to cause damage w
 * Helicopters are more likely to incur damage than airplanes
  
 # Recommendations
-* For pilots, smaller aircraft are more at risk for bird strike hazards. Most private pilots are flying small aircraft, and they should pay greater attention to bird watch conditions. When checking the weather and the NOTAMS, check the bird condition as well. If your local airpor doesn't broadcast this, check www.usahas.com
+* For pilots, smaller aircraft are more at risk for bird strike hazards. Most private pilots are flying small aircraft, and they should pay greater attention to bird watch conditions. When checking the weather and the NOTAMS, check the bird condition as well. If your local airport doesn't broadcast this, check www.usahas.com
 * For airport managers, pair data from this database with bird mitigation efforts to analyze effectiveness. The FAA in combination with the USDA have excellent recommendations for hazard mitigation, but each airport has specific hazards which can change over time. Vigilance is required.
